@@ -10,7 +10,7 @@ models: Dict[str, SentenceTransformer] = {}
 default_model_name = os.getenv("MODEL", 'all-MiniLM-L6-v2')
 
 class EmbeddingRequest(BaseModel):
-    input: str | List[str] = Field(examples=["substratus.ai provides the best LLM tools"])
+    input: Union[str, List[str]] = Field(examples=["substratus.ai provides the best LLM tools"])
     model: str = Field(examples=[default_model_name], default=default_model_name)
 
 class EmbeddingData(BaseModel):
@@ -65,6 +65,7 @@ async def embedding(item: EmbeddingRequest) -> EmbeddingResponse:
         )
     raise HTTPException(status_code=400, detail="input needs to be an array of strings or a string")
 
+@app.get("/")
 @app.get("/healthz")
 async def healthz():
     return {"status": "ok"}
