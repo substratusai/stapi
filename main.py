@@ -1,12 +1,13 @@
 from typing import Union, List, Dict
 from contextlib import asynccontextmanager
+import os
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from sentence_transformers import SentenceTransformer
 
 models: Dict[str, SentenceTransformer] = {}
-default_model_name = 'all-MiniLM-L6-v2'
+default_model_name = os.getenv("MODEL", 'all-MiniLM-L6-v2')
 
 class EmbeddingRequest(BaseModel):
     input: str | List[str] = Field(examples=["substratus.ai provides the best LLM tools"])

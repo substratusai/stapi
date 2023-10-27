@@ -1,5 +1,10 @@
 # Sentence Transformers API
 
+OpenAI compatible endpont for Sentence Transformer embedding models
+
+## Usage (Docker)
+
+
 ## Development
 
 ```
