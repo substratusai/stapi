@@ -53,7 +53,7 @@ async def embedding(item: EmbeddingRequest) -> EmbeddingResponse:
         for index, text_input in enumerate(item.input):
             if not isinstance(text_input, str):
                 raise HTTPException(status_code=400, detail="input needs to be an array of strings or a string")
-            vectors = models["default"].encode(item.input)
+            vectors = selected_model.encode(text_input)
             tokens += len(vectors)
             embeddings.append(EmbeddingData(embedding=vectors, index=index, object="embedding"))
         return EmbeddingResponse(
