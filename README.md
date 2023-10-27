@@ -8,7 +8,7 @@ Run the API locally using Docker:
 docker run -p 8080:8080 -d ghcr.io/substratusai/sentence-transformers-api
 ```
 
-Now you can visit the API docs on [http://localhost:8080/docs][http://localhost:8080/docs]
+Now you can visit the API docs on [http://localhost:8080/docs](http://localhost:8080/docs)
 
 You can also use CURL to get embeddings:
 ```bash
