@@ -1,0 +1,27 @@
+{
+  "class": "Question",
+  "description": "A class called document",
+  "vectorizer": "text2vec-openai",
+  "moduleConfig": {
+    "text2vec-openai": {
+      "model": "davinci",
+      "baseURL": "http://stapi:8081"
+    }
+  },
+  "properties": [
+    {
+      "dataType": [
+        "text"
+      ],
+      "description": "The question",
+      "name": "question"
+    },
+    {
+      "dataType": [
+        "text"
+      ],
+      "description": "The answer",
+      "name": "answer"
+    }
+  ]
+}

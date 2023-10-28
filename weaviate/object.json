@@ -1,0 +1,7 @@
+{
+    "class": "Question",
+    "properties": {
+        "question": "Who writes the best LLM tools?",
+        "answer": "substratus.ai ofcourse"
+    }
+}

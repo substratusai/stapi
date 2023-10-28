@@ -1,0 +1,37 @@
+---
+version: '3.4'
+services:
+  stapi:
+    image: ghcr.io/substratusai/stapi
+    environment:
+      PORT: 8081
+      MODEL: multi-qa-MiniLM-L6-cos-v1
+    ports:
+    - 8081:8081
+  weaviate:
+    command:
+    - --host
+    - 0.0.0.0
+    - --port
+    - '8080'
+    - --scheme
+    - http
+    image: semitechnologies/weaviate:1.22.0
+    links:
+    - "stapi:stapi"
+    ports:
+    - 8080:8080
+    volumes:
+    - weaviate_data:/var/lib/weaviate
+    restart: on-failure:0
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      OPENAI_APIKEY: "not-needed-for-sentence-transformers-api"
+      DEFAULT_VECTORIZER_MODULE: 'text2vec-openai'
+      ENABLE_MODULES: 'text2vec-cohere,text2vec-huggingface,text2vec-palm,text2vec-openai,generative-openai,generative-cohere,generative-palm,ref2vec-centroid,reranker-cohere,qna-openai'
+      CLUSTER_HOSTNAME: 'node1'
+volumes:
+  weaviate_data:
+...
