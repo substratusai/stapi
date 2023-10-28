@@ -7,20 +7,29 @@ from pydantic import BaseModel, Field
 from sentence_transformers import SentenceTransformer
 
 models: Dict[str, SentenceTransformer] = {}
-default_model_name = os.getenv("MODEL", 'all-MiniLM-L6-v2')
+model_name = os.getenv("MODEL", "all-MiniLM-L6-v2")
+
 
 class EmbeddingRequest(BaseModel):
-    input: Union[str, List[str]] = Field(examples=["substratus.ai provides the best LLM tools"])
-    model: str = Field(examples=[default_model_name], default=default_model_name)
+    input: Union[str, List[str]] = Field(
+        examples=["substratus.ai provides the best LLM tools"]
+    )
+    model: str = Field(
+        examples=[model_name],
+        default=model_name,
+    )
+
 
 class EmbeddingData(BaseModel):
     embedding: List[float]
     index: int
     object: str
 
+
 class Usage(BaseModel):
     prompt_tokens: int
     total_tokens: int
+
 
 class EmbeddingResponse(BaseModel):
     data: List[EmbeddingData]
@@ -31,39 +40,49 @@ class EmbeddingResponse(BaseModel):
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    models[default_model_name] = SentenceTransformer(default_model_name)
+    models[model_name] = SentenceTransformer(model_name)
     yield
+
 
 app = FastAPI(lifespan=lifespan)
 
+
 @app.post("/v1/embeddings")
 async def embedding(item: EmbeddingRequest) -> EmbeddingResponse:
-    selected_model: SentenceTransformer = models.setdefault(item.model, SentenceTransformer(item.model))
+    model: SentenceTransformer = models[model_name]
     if isinstance(item.input, str):
-        vectors = selected_model.encode(item.input)
+        vectors = model.encode(item.input)
         tokens = len(vectors)
         return EmbeddingResponse(
             data=[EmbeddingData(embedding=vectors, index=0, object="embedding")],
-            model=item.model,
+            model=model_name,
             usage=Usage(prompt_tokens=tokens, total_tokens=tokens),
-            object="list"
+            object="list",
         )
     if isinstance(item.input, list):
         embeddings = []
         tokens = 0
         for index, text_input in enumerate(item.input):
             if not isinstance(text_input, str):
-                raise HTTPException(status_code=400, detail="input needs to be an array of strings or a string")
-            vectors = selected_model.encode(text_input)
+                raise HTTPException(
+                    status_code=400,
+                    detail="input needs to be an array of strings or a string",
+                )
+            vectors = model.encode(text_input)
             tokens += len(vectors)
-            embeddings.append(EmbeddingData(embedding=vectors, index=index, object="embedding"))
+            embeddings.append(
+                EmbeddingData(embedding=vectors, index=index, object="embedding")
+            )
         return EmbeddingResponse(
             data=embeddings,
-            model=item.model,
+            model=model_name,
             usage=Usage(prompt_tokens=tokens, total_tokens=tokens),
-            object="list"
+            object="list",
         )
-    raise HTTPException(status_code=400, detail="input needs to be an array of strings or a string")
+    raise HTTPException(
+        status_code=400, detail="input needs to be an array of strings or a string"
+    )
+
 
 @app.get("/")
 @app.get("/healthz")

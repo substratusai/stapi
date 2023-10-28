@@ -77,8 +77,10 @@ docker run -e MODEL=multi-qa-MiniLM-L6-cos-v1  -p 8080:8080 -d \
   ghcr.io/substratusai/sentence-transformers-api
 ```
 
-In addition to preloading models, you can also specify other models at runtime. A single
-API endpoint can serve multiple models in parallel.
+Note that STAPI will only serve the model that it is preloaded with. You
+should create another instance of STAPI to serve another model. The `model`
+parameter as part of the request body is simply ignored.
+
 
 ## Integrations
 It's easy to utilize the embedding server with various other tools because
