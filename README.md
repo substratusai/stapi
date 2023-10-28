@@ -87,10 +87,23 @@ It's easy to utilize the embedding server with various other tools because
 the API is compatible with the OpenAI Embedding API.
 
 ### Weaviate
-TODO Write Weaviate guide here
+You can use the Weaviate text2vec-openai module and use the
+STAPI OpenAI compatible endpoint. In your Weaviate Schema
+use the following module config:
+```
+  "vectorizer": "text2vec-openai",
+  "moduleConfig": {
+    "text2vec-openai": {
+      "model": "davinci",
+      "baseURL": "http://stapi:8081"
+    }
+  }
+```
+For the OpenAI API key you can use any key, it won't be checked.
 
+Read the [STAPI Weaviate Guide](https://github.com/substratusai/stapi/tree/main/weaviate) for more details.
 
 ## Creators
 Feel free to contact any of us:
-* [Sam Stoelinga](https://www.linkedin.com/in/samstoelinga/)
+* [Sam Stoelinga aka Samos123](https://www.linkedin.com/in/samstoelinga/)
 * [Nick Stogner](https://www.linkedin.com/in/nstogner/)
