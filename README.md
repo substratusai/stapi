@@ -1,8 +1,8 @@
-# Sentence Transformers API
+# STAPI: Sentence Transformers API
 
 OpenAI compatible embedding API that uses Sentence Transformer for embeddings
 
-Container Image: `ghcr.io/substratusai/sentence-transformers-api`
+Container Image: `ghcr.io/substratusai/stapi`
 
 Support the project by adding a star! ❤️  
 Join us on Discord:  
@@ -11,12 +11,12 @@ Join us on Discord:
 </a>
 
 ## Install
-There are 2 options to install: Docker or local Python install.
+There are 2 options to install STAPI: Docker or local Python install.
 
 ### Install (Docker)
 Run the API locally using Docker:
 ```bash
-docker run -p 8080:8080 -d ghcr.io/substratusai/sentence-transformers-api
+docker run -p 8080:8080 -d ghcr.io/substratusai/stapi
 ```
 
 ### Install (Local python)
@@ -24,8 +24,8 @@ Install and run the API server locally using Python. Only supports python 3.9, 3
 
 Clone the repo:
 ```bash
-git clone https://github.com/substratusai/sentence-transformers-api
-cd sentence-transformers-api
+git clone https://github.com/substratusai/stapi
+cd stapi
 ```
 
 Install dependencies:
@@ -39,7 +39,7 @@ uvicorn main:app --port 8080 --reload
 ```
 
 ## Usage
-After you've installed sentence-transformers-api,
+After you've installed STAPI,
 you can visit the API docs on [http://localhost:8080/docs](http://localhost:8080/docs)
 
 You can also use CURL to get embeddings:
@@ -64,7 +64,7 @@ print(embedding)
 
 ## Supported Models
 Any model that's supported by Sentence Transformers should also work as-is
-with Sentence Transformers API.
+with STAPI.
 Here is a list of [pre-trained models](https://www.sbert.net/docs/pretrained_models.html) available with Sentence Transformers.
 
 By default the `all-MiniLM-L6-v2` model is used and preloaded on startup. You
