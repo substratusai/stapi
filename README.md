@@ -88,14 +88,17 @@ the API is compatible with the OpenAI Embedding API.
 
 ### Weaviate
 You can use the Weaviate text2vec-openai module and use the
-STAPI OpenAI compatible endpoint. In your Weaviate Schema
-use the following module config:
+STAPI OpenAI compatible endpoint.
+
+In your Weaviate Schema
+use the following module config, assuming STAPI endpoint
+is available at `http://stapi:8080`:
 ```
   "vectorizer": "text2vec-openai",
   "moduleConfig": {
     "text2vec-openai": {
       "model": "davinci",
-      "baseURL": "http://stapi:8081"
+      "baseURL": "http://stapi:8080"
     }
   }
 ```
