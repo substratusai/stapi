@@ -46,6 +46,7 @@ You can also use CURL to get embeddings:
 ```bash
 curl http://localhost:8080/v1/embeddings \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-secret-key" \
   -d '{
     "input": "Your text string goes here",
     "model": "all-MiniLM-L6-v2"
